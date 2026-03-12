@@ -342,7 +342,6 @@ function getLatestGps(params) {
   return jsonResponse(false, null, "device_not_found");
 }
 
-// 3. Ambil GPS History / Polyline (GET)
 function getGpsHistory(params) {
   const { device_id, limit } = params;
 
