@@ -45,16 +45,42 @@ Sistem absensi modern berbasis QR Code dengan fitur pelacakan telemetri (GPS & A
 
 ## 📖 Dokumentasi API
 
-Seluruh detail API dapat dilihat pada file [swagger.yaml](./swagger.yaml). Beberapa endpoint utama:
+Seluruh detail API dapat dilihat pada file [swagger.yaml](./swagger.yaml).
 
-- `POST /presence/qr/generate`: Membuat token QR baru.
-- `POST /presence/checkin`: Melakukan absensi.
-- `POST /telemetry/gps`: Mengirim data lokasi.
-- `POST /telemetry/accel`: Mengirim data sensor akselerometer.
+### Presence (QR)
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `POST` | `/presence/qr/generate` | Membuat token QR baru untuk sesi absensi. |
+| `POST` | `/presence/checkin` | Melakukan absensi menggunakan token QR yang valid. |
+| `GET`  | `/presence/status` | Mengecek status kehadiran user pada sesi tertentu. |
+
+### Telemetry — Accelerometer
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `POST` | `/telemetry/accel` | Mengirim data sampel sensor akselerometer (X, Y, Z). |
+| `GET`  | `/telemetry/accel/latest` | Mengambil data akselerometer terbaru untuk suatu perangkat. |
+
+### Telemetry — GPS
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `POST` | `/telemetry/gps` | Mengirim data koordinat GPS dari perangkat. |
+| `GET`  | `/telemetry/gps/latest` | Mengambil lokasi GPS terbaru untuk suatu perangkat. |
+| `GET`  | `/telemetry/gps/history` | Mengambil riwayat lokasi GPS (default: 200 entri terakhir). |
+
+### UI Pages
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `GET`  | `/scan` | Menampilkan halaman web untuk pemindaian QR (`?page=scan`). |
 
 ## 📝 Catatan Perubahan (v1.1.0)
-- Menambahkan modul **GPS Tracking**.
-- Menambahkan modul **Accelerometer Telemetry**.
+- Menambahkan modul **GPS Tracking** (`POST /telemetry/gps`, `GET /telemetry/gps/latest`, `GET /telemetry/gps/history`).
+- Menambahkan modul **Accelerometer Telemetry** (`POST /telemetry/accel`, `GET /telemetry/accel/latest`).
+- Menambahkan endpoint **Presence Status** (`GET /presence/status`).
+- Menambahkan endpoint **QR Scanner Page** (`GET /scan`).
 - Pembaruan dokumentasi Swagger dengan skema lengkap.
 - Optimalisasi respon JSON di Google Apps Script.
 
